@@ -1,0 +1,26 @@
+# Exclude IDE and Editor files
+/.idea/
+*.sublime*
+
+
+# Everything else
+/build/
+/target/
+
+/docs/build/
+/docs/source/_autogen/
+/docs/source/cli/output/
+
+/integration/**/__pycache__/
+
+# Go binaries
+/*/bin/
+
+# Auto-generated protobuf
+/common/src/protobuf
+**/src/messages/*.rs
+!**/src/messages/mod.rs
+/rpc/tests/protobuf/
+
+# Don't lock dependencies
+Cargo.lock
