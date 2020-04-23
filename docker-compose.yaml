@@ -570,7 +570,7 @@ services:
 
   block-info-tp-2:
     image: hyperledger/sawtooth-block-info-tp:nightly
-    container_name: block-info-tp
+    container_name: block-info-tp-2
     depends_on:
       - validator-2
     command: block-info-tp -vv --connect tcp://validator-2:4004
