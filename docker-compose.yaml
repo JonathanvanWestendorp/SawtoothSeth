@@ -388,12 +388,12 @@ services:
         - no_proxy
     image: sawtooth-seth-rpc:${ISOLATION_ID}
     container_name: seth-rpc-0
+    expose:
+      - 3030
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-0
-    ports:
-      - 3030:3030
     command: |
       bash -c "
         seth-rpc --connect tcp://validator-0:4004 --bind seth-rpc-0:3030
@@ -487,12 +487,12 @@ services:
         - no_proxy
     image: sawtooth-seth-rpc:${ISOLATION_ID}
     container_name: seth-rpc-1
+    expose:
+      - 3030
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-1
-    ports:
-      - 3030:3030
     command: |
       bash -c "
         seth-rpc --connect tcp://validator-1:4004 --bind seth-rpc-1:3030
@@ -586,12 +586,12 @@ services:
         - no_proxy
     image: sawtooth-seth-rpc:${ISOLATION_ID}
     container_name: seth-rpc-2
+    expose:
+      - 3030
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-2
-    ports:
-      - 3030:3030
     command: |
       bash -c "
         seth-rpc --connect tcp://validator-2:4004 --bind seth-rpc-2:3030
