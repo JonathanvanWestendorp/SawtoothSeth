@@ -28,7 +28,7 @@ contract SmartEnergy is Ownable {
         emit newUser(_userName);
     }
 
-    function getUserInfo(string calldata _userName) external view returns (
+    function getUserInfo(string calldata _userName) view returns (
         string memory,
         address,
         int,
@@ -39,7 +39,7 @@ contract SmartEnergy is Ownable {
         return(requestedUser.userName, requestedUser.userAddress, requestedUser.energyInput, requestedUser.energyBalance);
     }
     
-    function getUserBalance(string calldata _userName) external view returns (
+    function getUserBalance(string calldata _userName) view returns (
         int,
         uint
     ) {
