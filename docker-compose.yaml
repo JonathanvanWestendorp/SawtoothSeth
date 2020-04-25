@@ -400,199 +400,199 @@ services:
       "
 
 ######SETH 1######
-  seth-cli-1:
-    build:
-      context: .
-      dockerfile: ./cli/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-cli:${ISOLATION_ID}
-    container_name: seth-cli-1
-    volumes:
-      - ./contracts:/project/sawtooth-seth/contracts
-      - sawtooth:/root/.sawtooth
-    depends_on:
-      - validator-1
-    working_dir: /project/sawtooth-seth
-    entrypoint: |
-      bash -c "
-        seth config init --url http://seth-rpc-1:3030
-        tail -f /dev/null
-      "
+#   seth-cli-1:
+#     build:
+#       context: .
+#       dockerfile: ./cli/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-cli:${ISOLATION_ID}
+#     container_name: seth-cli-1
+#     volumes:
+#       - ./contracts:/project/sawtooth-seth/contracts
+#       - sawtooth:/root/.sawtooth
+#     depends_on:
+#       - validator-1
+#     working_dir: /project/sawtooth-seth
+#     entrypoint: |
+#       bash -c "
+#         seth config init --url http://seth-rpc-1:3030
+#         tail -f /dev/null
+#       "
 
-  seth-cli-go-1:
-    build:
-      context: .
-      dockerfile: ./cli-go/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-cli-go:${ISOLATION_ID}
-    container_name: seth-cli-go-1
-    volumes:
-      - ./contracts:/project/sawtooth-seth/contracts
-    depends_on:
-      - rest-api-1
-    working_dir: /project/sawtooth-seth
-    entrypoint: |
-      bash -c "
-        seth init http://rest-api-1:8008 &&
-        if [ ! -f /root/.sawtooth/keys/root.priv ]; then
-        sawtooth keygen
-        fi;
-        tail -f /dev/null
-      "
+#   seth-cli-go-1:
+#     build:
+#       context: .
+#       dockerfile: ./cli-go/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-cli-go:${ISOLATION_ID}
+#     container_name: seth-cli-go-1
+#     volumes:
+#       - ./contracts:/project/sawtooth-seth/contracts
+#     depends_on:
+#       - rest-api-1
+#     working_dir: /project/sawtooth-seth
+#     entrypoint: |
+#       bash -c "
+#         seth init http://rest-api-1:8008 &&
+#         if [ ! -f /root/.sawtooth/keys/root.priv ]; then
+#         sawtooth keygen
+#         fi;
+#         tail -f /dev/null
+#       "
 
-  seth-tp-1:
-    build:
-      context: .
-      dockerfile: ./processor/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    tty: true
-    stdin_open: true
-    image: sawtooth-seth-tp:${ISOLATION_ID}
-    container_name: seth-tp-1
-    depends_on:
-      - validator-1
-    command: |
-      bash -c "
-        seth-tp -vv \
-          -C tcp://validator-1:4004
-      "
+#   seth-tp-1:
+#     build:
+#       context: .
+#       dockerfile: ./processor/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     tty: true
+#     stdin_open: true
+#     image: sawtooth-seth-tp:${ISOLATION_ID}
+#     container_name: seth-tp-1
+#     depends_on:
+#       - validator-1
+#     command: |
+#       bash -c "
+#         seth-tp -vv \
+#           -C tcp://validator-1:4004
+#       "
 
-  block-info-tp-1:
-    image: hyperledger/sawtooth-block-info-tp:nightly
-    container_name: block-info-tp-1
-    depends_on:
-      - validator-1
-    command: block-info-tp -vv --connect tcp://validator-1:4004
+#   block-info-tp-1:
+#     image: hyperledger/sawtooth-block-info-tp:nightly
+#     container_name: block-info-tp-1
+#     depends_on:
+#       - validator-1
+#     command: block-info-tp -vv --connect tcp://validator-1:4004
 
-  seth-rpc-1:
-    build:
-      context: .
-      dockerfile: ./rpc/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-rpc:${ISOLATION_ID}
-    container_name: seth-rpc-1
-    expose:
-      - 3030
-    volumes:
-      - sawtooth:/root/.sawtooth
-    depends_on:
-      - validator-1
-    command: |
-      bash -c "
-        seth-rpc --connect tcp://validator-1:4004 --bind seth-rpc-1:3030
-      "
+#   seth-rpc-1:
+#     build:
+#       context: .
+#       dockerfile: ./rpc/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-rpc:${ISOLATION_ID}
+#     container_name: seth-rpc-1
+#     expose:
+#       - 3030
+#     volumes:
+#       - sawtooth:/root/.sawtooth
+#     depends_on:
+#       - validator-1
+#     command: |
+#       bash -c "
+#         seth-rpc --connect tcp://validator-1:4004 --bind seth-rpc-1:3030
+#       "
 
-######SETH 2######
-  seth-cli-2:
-    build:
-      context: .
-      dockerfile: ./cli/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-cli:${ISOLATION_ID}
-    container_name: seth-cli-2
-    volumes:
-      - ./contracts:/project/sawtooth-seth/contracts
-      - sawtooth:/root/.sawtooth
-    depends_on:
-      - validator-2
-    working_dir: /project/sawtooth-seth
-    entrypoint: |
-      bash -c "
-        seth config init --url http://seth-rpc-2:3030
-        tail -f /dev/null
-      "
+# ######SETH 2######
+#   seth-cli-2:
+#     build:
+#       context: .
+#       dockerfile: ./cli/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-cli:${ISOLATION_ID}
+#     container_name: seth-cli-2
+#     volumes:
+#       - ./contracts:/project/sawtooth-seth/contracts
+#       - sawtooth:/root/.sawtooth
+#     depends_on:
+#       - validator-2
+#     working_dir: /project/sawtooth-seth
+#     entrypoint: |
+#       bash -c "
+#         seth config init --url http://seth-rpc-2:3030
+#         tail -f /dev/null
+#       "
 
-  seth-cli-go-2:
-    build:
-      context: .
-      dockerfile: ./cli-go/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-cli-go:${ISOLATION_ID}
-    container_name: seth-cli-go-2
-    volumes:
-      - ./contracts:/project/sawtooth-seth/contracts
-    depends_on:
-      - rest-api-2
-    working_dir: /project/sawtooth-seth
-    entrypoint: |
-      bash -c "
-        seth init http://rest-api-2:8008 &&
-        if [ ! -f /root/.sawtooth/keys/root.priv ]; then
-        sawtooth keygen
-        fi;
-        tail -f /dev/null
-      "
+#   seth-cli-go-2:
+#     build:
+#       context: .
+#       dockerfile: ./cli-go/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-cli-go:${ISOLATION_ID}
+#     container_name: seth-cli-go-2
+#     volumes:
+#       - ./contracts:/project/sawtooth-seth/contracts
+#     depends_on:
+#       - rest-api-2
+#     working_dir: /project/sawtooth-seth
+#     entrypoint: |
+#       bash -c "
+#         seth init http://rest-api-2:8008 &&
+#         if [ ! -f /root/.sawtooth/keys/root.priv ]; then
+#         sawtooth keygen
+#         fi;
+#         tail -f /dev/null
+#       "
 
-  seth-tp-2:
-    build:
-      context: .
-      dockerfile: ./processor/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    tty: true
-    stdin_open: true
-    image: sawtooth-seth-tp:${ISOLATION_ID}
-    container_name: seth-tp-2
-    depends_on:
-      - validator-2
-    command: |
-      bash -c "
-        seth-tp -vv \
-          -C tcp://validator-2:4004
-      "
+#   seth-tp-2:
+#     build:
+#       context: .
+#       dockerfile: ./processor/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     tty: true
+#     stdin_open: true
+#     image: sawtooth-seth-tp:${ISOLATION_ID}
+#     container_name: seth-tp-2
+#     depends_on:
+#       - validator-2
+#     command: |
+#       bash -c "
+#         seth-tp -vv \
+#           -C tcp://validator-2:4004
+#       "
 
-  block-info-tp-2:
-    image: hyperledger/sawtooth-block-info-tp:nightly
-    container_name: block-info-tp-2
-    depends_on:
-      - validator-2
-    command: block-info-tp -vv --connect tcp://validator-2:4004
+#   block-info-tp-2:
+#     image: hyperledger/sawtooth-block-info-tp:nightly
+#     container_name: block-info-tp-2
+#     depends_on:
+#       - validator-2
+#     command: block-info-tp -vv --connect tcp://validator-2:4004
 
-  seth-rpc-2:
-    build:
-      context: .
-      dockerfile: ./rpc/Dockerfile
-      args:
-        - ISOLATION_ID=${ISOLATION_ID}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: sawtooth-seth-rpc:${ISOLATION_ID}
-    container_name: seth-rpc-2
-    expose:
-      - 3030
-    volumes:
-      - sawtooth:/root/.sawtooth
-    depends_on:
-      - validator-2
-    command: |
-      bash -c "
-        seth-rpc --connect tcp://validator-2:4004 --bind seth-rpc-2:3030
-      "
+#   seth-rpc-2:
+#     build:
+#       context: .
+#       dockerfile: ./rpc/Dockerfile
+#       args:
+#         - ISOLATION_ID=${ISOLATION_ID}
+#         - http_proxy
+#         - https_proxy
+#         - no_proxy
+#     image: sawtooth-seth-rpc:${ISOLATION_ID}
+#     container_name: seth-rpc-2
+#     expose:
+#       - 3030
+#     volumes:
+#       - sawtooth:/root/.sawtooth
+#     depends_on:
+#       - validator-2
+#     command: |
+#       bash -c "
+#         seth-rpc --connect tcp://validator-2:4004 --bind seth-rpc-2:3030
+#       "
