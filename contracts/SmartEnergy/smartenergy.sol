@@ -1,8 +1,6 @@
 pragma solidity >=0.6.6;
 
-import "./ownable.sol";
-
-contract SmartEnergy is Ownable {
+contract SmartEnergy {
     
     event newUser(string _userName);
     
@@ -19,7 +17,7 @@ contract SmartEnergy is Ownable {
     
     User[] public users;
 
-    function register(string memory _userName, address _userAdress) public onlyOwner {
+    function register(string memory _userName, address _userAdress) public {
         require((userNameToUser[_userName].exists == false) && (addressToUser[_userAdress].exists == false));
         User memory registeredUser = User(_userName, _userAdress, 100, 1000, true);
         users.push(registeredUser);
