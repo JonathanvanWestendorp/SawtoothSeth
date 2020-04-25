@@ -19,7 +19,7 @@ contract SmartEnergy is Ownable {
     
     User[] public users;
 
-    function register(string calldata _userName, address _userAdress) external onlyOwner {
+    function register(string memory _userName, address _userAdress) public onlyOwner {
         require((userNameToUser[_userName].exists == false) && (addressToUser[_userAdress].exists == false));
         User memory registeredUser = User(_userName, _userAdress, 100, 1000, true);
         users.push(registeredUser);
@@ -28,7 +28,7 @@ contract SmartEnergy is Ownable {
         emit newUser(_userName);
     }
 
-    function getUserInfo(string calldata _userName) view returns (
+    function getUserInfo(string memory _userName) public view returns (
         string memory,
         address,
         int,
@@ -39,7 +39,7 @@ contract SmartEnergy is Ownable {
         return(requestedUser.userName, requestedUser.userAddress, requestedUser.energyInput, requestedUser.energyBalance);
     }
     
-    function getUserBalance(string calldata _userName) view returns (
+    function getUserBalance(string memory _userName) public view returns (
         int,
         uint
     ) {
