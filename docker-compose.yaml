@@ -391,14 +391,13 @@ services:
     container_name: seth-rpc-0
     expose:
       - 3030
-      - 4004
     environment:
       RUST_BACKTRACE: "full"
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-0
-    command: |
+    entrypoint: |
       bash -c "
         seth-rpc --connect tcp://validator-0:4004 --bind 0.0.0.0:3030
       "
@@ -494,14 +493,13 @@ services:
     container_name: seth-rpc-1
     expose:
       - 3030
-      - 4004
     environment:
       RUST_BACKTRACE: "full"
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-1
-    command: |
+    entrypoint: |
       bash -c "
         seth-rpc --connect tcp://validator-1:4004 --bind 0.0.0.0:3030
       "
@@ -597,14 +595,13 @@ services:
     container_name: seth-rpc-2
     expose:
       - 3030
-      - 4004
     environment:
       RUST_BACKTRACE: "full"
     volumes:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-2
-    command: |
+    entrypoint: |
       bash -c "
         seth-rpc --connect tcp://validator-2:4004 --bind 0.0.0.0:3030
       "
