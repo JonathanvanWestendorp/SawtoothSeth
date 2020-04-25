@@ -337,6 +337,7 @@ services:
     container_name: seth-cli-go-0
     volumes:
       - ./contracts:/project/sawtooth-seth/contracts
+      - sawtooth:/root/.sawtooth
     depends_on:
       - rest-api-0
     working_dir: /project/sawtooth-seth
@@ -439,6 +440,7 @@ services:
     container_name: seth-cli-go-1
     volumes:
       - ./contracts:/project/sawtooth-seth/contracts
+      - sawtooth:/root/.sawtooth
     depends_on:
       - rest-api-1
     working_dir: /project/sawtooth-seth
@@ -541,6 +543,7 @@ services:
     container_name: seth-cli-go-2
     volumes:
       - ./contracts:/project/sawtooth-seth/contracts
+      - sawtooth:/root/.sawtooth
     depends_on:
       - rest-api-2
     working_dir: /project/sawtooth-seth
