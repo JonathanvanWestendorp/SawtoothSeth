@@ -342,7 +342,13 @@ services:
       - rest-api-0
     working_dir: /project/sawtooth-seth
     entrypoint: |
-      bash -c "seth init http://rest-api-0:8008"
+      bash -c "
+        seth init http://rest-api-0:8008 &&
+        if [ ! -f /root/.sawtooth/keys/root.priv ]; then
+        sawtooth keygen seth-0
+        fi;
+        tail -f /dev/null
+      "
 
   seth-tp-0:
     build:
@@ -439,7 +445,13 @@ services:
       - rest-api-1
     working_dir: /project/sawtooth-seth
     entrypoint: |
-      bash -c "seth init http://rest-api-1:8008"
+      bash -c "
+        seth init http://rest-api-1:8008 &&
+        if [ ! -f /root/.sawtooth/keys/root.priv ]; then
+        sawtooth keygen seth-1
+        fi;
+        tail -f /dev/null
+      "
 
   seth-tp-1:
     build:
@@ -536,7 +548,13 @@ services:
       - rest-api-2
     working_dir: /project/sawtooth-seth
     entrypoint: |
-      bash -c "seth init http://rest-api-2:8008"
+      bash -c "
+        seth init http://rest-api-2:8008 &&
+        if [ ! -f /root/.sawtooth/keys/root.priv ]; then
+        sawtooth keygen seth-2
+        fi;
+        tail -f /dev/null
+      "
 
   seth-tp-2:
     build:
