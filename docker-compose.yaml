@@ -397,10 +397,10 @@ services:
       - sawtooth:/root/.sawtooth
     depends_on:
       - validator-0
-    entrypoint: |
-      bash -c "
-        seth-rpc --connect tcp://validator-0:4004 --bind 0.0.0.0:3030
-      "
+    # entrypoint: |
+    #   bash -c "
+    #     seth-rpc --connect tcp://validator-0:4004 --bind 0.0.0.0:3030 --unlock
+    #   "
 
 # ######SETH 0######
 #   seth-cli-0:
